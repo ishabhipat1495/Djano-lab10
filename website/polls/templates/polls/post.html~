@@ -1,13 +1,4 @@
-<h1>{{ question.question_text }}</h1>
-<ul>
-{% for answer in question.answer_set.all %}
-    <li>{{ answer.answer_text }}</li>
-    <li>{{ answer.author_text }}</li>
-{% endfor %}
-</ul>
-
-<form action ="/polls/{{question.id}}/get_answer/" method="post">
-{% csrf_token %}
+<form action="/Your-Answer/" method="post">
     <label for="your_answer">Your answer: </label>
     <input id="your_answer" type="text" answer="your_answer" value="{{ current_answer }}">
     <label for="your_name">Your name: </label>

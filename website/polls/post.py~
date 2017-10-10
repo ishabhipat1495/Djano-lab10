@@ -1,0 +1,6 @@
+from django import 
+
+class PostForm(post.Posts):
+    your_answer = post.CharField(label='Your answer', max_length=200)
+    your_name = post.CharField(label='Your name', max_length=20)
+
