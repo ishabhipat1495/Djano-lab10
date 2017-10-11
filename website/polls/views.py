@@ -5,6 +5,10 @@ from polls.forms import PostForm, LoginForm
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+
 #from django.contrib.auth.views import LoginView
 
 def index(request):
@@ -34,6 +38,20 @@ def login(request):
 				return HttpResponseRedirect('/polls/login')
 	else:
 		return render(request, 'polls/login.html')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect('/polls/login/')
+    else:
+        form = UserCreationForm()
+        return render(request, 'polls/signup.html')
 
 def detail(request, question_id):
 	if not request.user.is_authenticated:
