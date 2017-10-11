@@ -9,9 +9,9 @@
 <form action ="/polls/{{question.id}}/get_answer/" method="post">
 {% csrf_token %}
     <label for="your_answer">Your answer: </label>
-    <input id="your_answer" type="text" answer="your_answer" value="{{ current_answer }}">
+    <input id="your_answer" type="text" name="your_answer">
     <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
+    <input id="your_name" type="text" name="your_name" >
     <input type="submit" value="OK">
 </form>
 
