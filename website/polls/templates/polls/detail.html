@@ -1,17 +1,48 @@
-<h1>{{ question.question_text }}</h1>
-<ul>
-{% for answer in question.answer_set.all %}
-    <li>{{ answer.answer_text }}</li>
-    <li>{{ answer.author_text }}</li>
-{% endfor %}
-</ul>
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Answers to {{ question.question_text }}</title>
+  	<link rel="stylesheet" href="{% static 'answers.css' %}" type="text/css">
+  	<link rel="stylesheet" href="{% static 'common.css' %}" type="text/css">
+  </head>
+  <body>
+  		<ul class="navbar">
+		  <li><a href="/polls">All Questions</a></li>
+		  <li class="heading"><a>TechStack</a></li>
+		  <li style="float:right"><span>Logged in as: {{ request.user.username }}</span> <a class="active" href="/polls/logout">Logout</a></li>
+		</ul>
+	   	
+	   	<div class="question-container container">
+	   		<h3>Question : {{ question.question_text }}</h3>
+	   	</div>
 
-<form action ="/polls/{{question.id}}/get_answer/" method="post">
-{% csrf_token %}
-    <label for="your_answer">Your answer: </label>
-    <input id="your_answer" type="text" name="your_answer">
-    <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name" >
-    <input type="submit" value="OK">
-</form>
+	   	<div class="container">
+		  	<div class="answer-container">
+		  		{% for answer in question.answer_set.all %}
+				  	<div class="answer">
+				  		<div class="answer-body">{{answer.answer_text}}</div>
+				  		<hr />
+				  		<div class="meta"><p class="answer-added-at">Answered at {{ answer.created_at|date:'Y-m-d H:i' }}</p><p class="answer-given-by">by {{ answer.author_text }}</p></div>
+				  	</div>
+				{% endfor %}
+		  	</div>
+		  	{% ifequal question.answer_set.count 0 %}
+				<h3 class="no-results-text">No answers yet!</h3>
+			{% endifequal %}  
+
+	  	
+		  <form action="/polls/{{question.id}}/get_answer/" method="POST">
+		  	{% csrf_token %}
+
+		    <label for="subject"><strong>Your Answer</strong></label>
+		    <textarea id="subject" name="your_answer" placeholder="Write something.." style="height:200px"></textarea>
+
+		    <input type="submit" value="Submit">
+
+		  </form>
+		</div>
+  </body>
+</html>
 

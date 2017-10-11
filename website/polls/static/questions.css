@@ -1,0 +1,45 @@
+
+ 
+.container {
+  width: 80vw;
+  margin: 20px auto 20px auto;
+  background: none;
+  padding-top: 5px;
+}
+
+.container h2 {
+  text-align: center;
+}
+ 
+.listing {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+h3 {
+  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+  margin: 5px 0 5px 0;
+}
+ 
+.listing a {
+  text-decoration: none;
+}
+ 
+.listing li p {
+  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+ 
+.listing li {
+  padding: 10px;
+  overflow: auto;
+}
+ 
+.listing li:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+ul.navbar li.heading {
+  margin-left: 45%;
+}

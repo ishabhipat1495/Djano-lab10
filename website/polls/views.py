@@ -36,15 +36,19 @@ def login(request):
 		return render(request, 'polls/login.html')
 
 def detail(request, question_id):
-	question = get_object_or_404(Question, pk=question_id)
-	return render(request, 'polls/detail.html', {'question': question})
+	if not request.user.is_authenticated:
+		messages.error(request, 'Please login first to view the questions!')
+		return HttpResponseRedirect('/polls/login/')
+	else:
+		question = get_object_or_404(Question, pk=question_id)
+		return render(request, 'polls/detail.html', {'question': question})
 
 def get_answer(request,question_id):
 	if request.method == 'POST':
 		form = PostForm(request.POST)
 		if form.is_valid():
 			answer = form.cleaned_data['your_answer']
-			name = form.cleaned_data['your_name']
+			name = request.user.username
 			question = Question.objects.get(id=question_id) 
 			answer = Answer(answer_text=answer, author_text=name, question = question)
 			answer.save()
