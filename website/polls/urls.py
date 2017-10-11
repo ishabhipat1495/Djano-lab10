@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^(?P<question_id>[0-9]+)/results/$', views.results, name='results'),
     url(r'^(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
     url(r'^(?P<question_id>[0-9]+)/get_answer/$', views.get_answer, name='get_answer'),
-    url(r'^/login/$', auth_views.LoginView.as_view())
+    url(r'^login', views.login),
+    url(r'^logout', views.logout)
 ]
