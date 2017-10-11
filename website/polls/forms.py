@@ -11,6 +11,7 @@ class LoginForm(forms.Form):
 class UserCreationForm(forms.Form):
     username = forms.CharField(label='Username', max_length=50)
     password = forms.CharField(label='Password', max_length=200)
+    repeatpassword = forms.CharField(label='Repeat Password', max_length=200)
    
 
 

@@ -1,14 +1,13 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
 from polls.models import Question, Answer
-from polls.forms import PostForm, LoginForm
+from polls.forms import PostForm, LoginForm, UserCreationForm
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
-
+from django.contrib.auth.models import User
 #from django.contrib.auth.views import LoginView
 
 def index(request):
@@ -40,18 +39,24 @@ def login(request):
 		return render(request, 'polls/login.html')
 
 def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return HttpResponseRedirect('/polls/login/')
-    else:
-        form = UserCreationForm()
-        return render(request, 'polls/signup.html')
+	if request.method == 'POST':
+		print("hdjkcs")
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password')
+			repeat_password = form.cleaned_data.get('password')
+			if raw_password == repeat_password:
+				user = User.objects.create_user(username=username, password=raw_password)
+				user.save()
+				messages.success(request, 'User created! Please login to see questions.')
+			else:
+				messages.error(request, 'Password fields don\'t match!')
+			return HttpResponseRedirect('/polls/login/')
+	else:
+		form = UserCreationForm()
+		return render(request, 'polls/signup.html')
 
 def detail(request, question_id):
 	if not request.user.is_authenticated:
