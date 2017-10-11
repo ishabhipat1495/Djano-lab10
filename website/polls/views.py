@@ -40,20 +40,23 @@ def login(request):
 
 def signup(request):
 	if request.method == 'POST':
-		print("hdjkcs")
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
-
 			username = form.cleaned_data.get('username')
 			raw_password = form.cleaned_data.get('password')
-			repeat_password = form.cleaned_data.get('password')
+			repeat_password = form.cleaned_data.get('repeatpassword')
 			if raw_password == repeat_password:
-				user = User.objects.create_user(username=username, password=raw_password)
-				user.save()
-				messages.success(request, 'User created! Please login to see questions.')
+				try:
+					user = User.objects.create_user(username=username, password=raw_password)
+					user.save()
+					messages.success(request, 'User created! Please login to see questions.')
+					return HttpResponseRedirect('/polls/login/')
+				except:
+					messages.error(request, 'Username already taken! Try something else.')	
+					return HttpResponseRedirect('/polls/signup/')
 			else:
 				messages.error(request, 'Password fields don\'t match!')
-			return HttpResponseRedirect('/polls/login/')
+				return HttpResponseRedirect('/polls/signup/')
 	else:
 		form = UserCreationForm()
 		return render(request, 'polls/signup.html')
@@ -75,7 +78,7 @@ def get_answer(request,question_id):
 			question = Question.objects.get(id=question_id) 
 			answer = Answer(answer_text=answer, author_text=name, question = question)
 			answer.save()
-			return HttpResponseRedirect('/polls/')
+			return HttpResponseRedirect('/polls/'+str(question_id))
 	else:
 		return HttpResponseRedirect('/polls/')
 

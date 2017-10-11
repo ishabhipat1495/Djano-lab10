@@ -7,37 +7,47 @@
   padding-top: 5px;
 }
 
-.container h2 {
+h1 {
   text-align: center;
 }
- 
-.listing {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+
+.questions-container {
+  padding: 5px;
 }
  
-h3 {
-  font: bold 20px/1.5 Helvetica, Verdana, sans-serif;
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.1em;
+}
+
+h4 {
+  font: bold 16px/1.5 Helvetica, Verdana, sans-serif;
   margin: 5px 0 5px 0;
 }
  
 .listing a {
   text-decoration: none;
 }
- 
-.listing li p {
-  font: 200 12px/1.5 Georgia, Times New Roman, serif;
+
+.listing a h4, .listing a p {
+  margin: 5px 0 5px 0;
 }
- 
-.listing li {
-  padding: 10px;
-  overflow: auto;
-}
- 
-.listing li:hover {
-  background: #eee;
-  cursor: pointer;
+
+.listing a:visited {
+  color:#000;
 }
 
 ul.navbar li.heading {

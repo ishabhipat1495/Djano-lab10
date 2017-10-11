@@ -1,18 +1,42 @@
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="{% static 'login.css' %}" type="text/css">
+  	<link rel="stylesheet" href="{% static 'common.css' %}" type="text/css">
+</head>
+<body>
+	<h1>Login to your TechStack account</h1>
+	<div class="form-container">
+		{% if messages %}
+		<div class="messages">
+		    {% for message in messages %}
+		    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+		    {% endfor %}
+		</div>
+		{% endif %}
 
+		<form action ="/polls/login" method="post">
+			{% csrf_token %}
+		  <div class="imgcontainer">
+		    <img src="{% static 'img_avatar2.png' %}" alt="Avatar" class="avatar">
+		  </div>
 
-<form action ="/polls/login" method="post">
-{% csrf_token %}
-    <label for="your_answer">Username: </label>
-    <input type="text" name="username">
-    <label for="your_name">Password: </label>
-    <input type="password" name="password" >
-    <input type="submit" value="Login">
-    <a href="/polls/signup/">Sign up!!</a>
-</form>
+		  <div class="container">
+		    <label><b>Username</b></label>
+		    <input type="text" placeholder="Enter Username" name="username" required>
+
+		    <label><b>Password</b></label>
+		    <input type="password" placeholder="Enter Password" name="password" required>
+		        
+		    <button type="submit">Login</button>
+		  </div>
+		  <div class="container" style="background-color:#f1f1f1">
+		    <span class="psw">New user? <a href="/polls/signup">Signup</a></span>
+		  </div>
+		</form>
+	</div>
+
+</body>
+</html>
+

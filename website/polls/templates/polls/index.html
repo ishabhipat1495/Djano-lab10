@@ -14,22 +14,30 @@
 		  <li style="float:right"><span>Logged in as: {{ request.user.username }}</span> <a class="active" href="/polls/logout">Logout</a></li>
 		</ul>
 
-	   	<div class="container">
-		  
+		 <div class="questions-container">
 	   		{% if latest_question_list %}
-	   			<h2>Active Questions</h2>
-				<ul class="listing">
-					<hr />
-					{% for question in latest_question_list %}
-					<li>
-						<a href="{% url 'polls:detail' question.id %}">
-							<h3>{{ question.question_text }}</h3>
-							<p>Asked {{question.pub_date}}</p>
-						</a>
-					</li> 
-					<hr />
-					{% endfor %}  
-				</ul>
+	   			<h1>Active Questions</h1>
+	   			<table class="listing">
+	   				<thead>
+	   					<tr class="heading">
+	   						<th>
+	   							Questions
+	   						</th>
+	   					</tr>
+	   				</thead>
+	   				<tbody>
+	   					{% for question in latest_question_list %}
+	   					<tr class="questions">
+	   						<td>
+	   							<a href="{% url 'polls:detail' question.id %}">
+									<h4>{{ question.question_text }}</h4>
+									<p>Asked {{question.pub_date}}</p>
+								</a>
+	   						</td>
+	   					</tr>
+	   					{% endfor %} 
+	   				</tbody>
+	   			</table>
 			{% else %}
 			    <p>No polls are available.</p>
 			{% endif %}

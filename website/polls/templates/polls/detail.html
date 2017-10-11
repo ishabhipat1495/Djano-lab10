@@ -16,16 +16,19 @@
 	   	
 	   	<div class="question-container container">
 	   		<h3>Question : {{ question.question_text }}</h3>
-	   	</div>
 
-	   	<div class="container">
 		  	<div class="answer-container">
 		  		{% for answer in question.answer_set.all %}
-				  	<div class="answer">
-				  		<div class="answer-body">{{answer.answer_text}}</div>
-				  		<hr />
-				  		<div class="meta"><p class="answer-added-at">Answered at {{ answer.created_at|date:'Y-m-d H:i' }}</p><p class="answer-given-by">by {{ answer.author_text }}</p></div>
-				  	</div>
+		  			<table class="answer">
+		  				<tr class="answer-text">
+		  					<td>{{answer.answer_text}}</td>
+		  				</tr>
+		  				<tr class="answer-meta">
+		  					<td>
+		  						<p class="answer-added-at">Answered at {{ answer.created_at|date:'Y-m-d H:i' }}</p><p class="answer-given-by">by {{ answer.author_text }}</p>
+		  					</td>
+		  				</tr>
+		  			</table>
 				{% endfor %}
 		  	</div>
 		  	{% ifequal question.answer_set.count 0 %}
